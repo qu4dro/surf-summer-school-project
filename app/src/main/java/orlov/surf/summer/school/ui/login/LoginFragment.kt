@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.redmadrobot.inputmask.MaskedTextChangedListener
+import com.redmadrobot.inputmask.MaskedTextChangedListener.Companion.installOn
 import orlov.surf.summer.school.R
 import orlov.surf.summer.school.databinding.FragmentLoginBinding
 
@@ -25,11 +27,34 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupLoginMask()
+    }
+
+    private fun setupLoginMask() {
+        installOn(
+            binding.edtLogin,
+            PHONE_MASK,
+            object : MaskedTextChangedListener.ValueListener {
+                override fun onTextChanged(
+                    maskFilled: Boolean,
+                    extractedValue: String,
+                    formattedValue: String
+                ) {
+
+                }
+
+            }
+
+        )
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val PHONE_MASK = "+7 ([000]) [000] [00] [00]"
     }
 
 }

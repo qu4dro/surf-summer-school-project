@@ -36,8 +36,9 @@
         app:layout_constraintTop_toBottomOf="@id/top_bar_guideline">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_login"
             android:imeOptions="actionNext"
-            android:inputType="number"
+            android:inputType="phone"
             style="@style/TextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -57,6 +58,7 @@
         app:layout_constraintTop_toBottomOf="@id/til_login">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_password"
             android:imeOptions="actionDone"
             android:lines="1"
             android:maxLength="255"
