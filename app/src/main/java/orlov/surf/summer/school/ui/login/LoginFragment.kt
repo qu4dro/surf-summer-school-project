@@ -4,13 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import com.redmadrobot.inputmask.MaskedTextChangedListener.Companion.installOn
+import dagger.hilt.android.AndroidEntryPoint
 import orlov.surf.summer.school.R
 import orlov.surf.summer.school.databinding.FragmentLoginBinding
+import timber.log.Timber
 
+@AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
+
+    private val viewModel: LoginViewModel by activityViewModels()
 
     private var _binding: FragmentLoginBinding? = null
     val binding
@@ -27,7 +34,48 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupUI()
+        setupObservers()
+    }
+
+    private fun setupUI() {
         setupLoginMask()
+        binding.apply {
+            btnLogin.setOnClickListener {
+                viewModel.auth()
+            }
+            edtPassword.doOnTextChanged { password, _, _, _ ->
+                viewModel.setPassword(password.toString())
+            }
+        }
+    }
+
+    private fun setupObservers() {
+        observeLoginError()
+        observePasswordError()
+    }
+
+    private fun observeLoginError() {
+        viewModel.loginError.observe(viewLifecycleOwner) { loginError ->
+            when (loginError) {
+                LoginError.EMPTY -> binding.tilLogin.error = getString(R.string.empty_field)
+                LoginError.NOT_VALID -> binding.tilLogin.error = getString(R.string.login_format)
+                LoginError.VALID -> binding.tilLogin.error = null
+                else -> {}
+            }
+        }
+    }
+
+    private fun observePasswordError() {
+        viewModel.passwordError.observe(viewLifecycleOwner) { passwordError ->
+            when (passwordError) {
+                PasswordError.EMPTY -> binding.tilPassword.error = getString(R.string.empty_field)
+                PasswordError.NOT_VALID -> binding.tilPassword.error =
+                    getString(R.string.password_length)
+                PasswordError.VALID -> binding.tilPassword.error = null
+                else -> {}
+            }
+        }
     }
 
     private fun setupLoginMask() {
@@ -40,7 +88,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     extractedValue: String,
                     formattedValue: String
                 ) {
-                    //TODO
+                    viewModel.setLogin(extractedValue)
                 }
             }
         )
