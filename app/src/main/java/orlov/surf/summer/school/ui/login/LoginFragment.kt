@@ -40,11 +40,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     extractedValue: String,
                     formattedValue: String
                 ) {
-
+                    //TODO
                 }
-
             }
-
         )
     }
 
