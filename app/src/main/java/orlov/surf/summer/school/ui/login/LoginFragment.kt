@@ -12,6 +12,7 @@ import com.redmadrobot.inputmask.MaskedTextChangedListener.Companion.installOn
 import dagger.hilt.android.AndroidEntryPoint
 import orlov.surf.summer.school.R
 import orlov.surf.summer.school.databinding.FragmentLoginBinding
+import orlov.surf.summer.school.utils.LoadState
 import timber.log.Timber
 
 @AndroidEntryPoint
@@ -53,6 +54,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun setupObservers() {
         observeLoginError()
         observePasswordError()
+        observeLoadState()
     }
 
     private fun observeLoginError() {
@@ -74,6 +76,22 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     getString(R.string.password_length)
                 PasswordError.VALID -> binding.tilPassword.error = null
                 else -> {}
+            }
+        }
+    }
+
+    private fun observeLoadState() {
+        viewModel.loadState.observe(viewLifecycleOwner) { state ->
+            when(state) {
+                LoadState.LOADING -> {
+
+                }
+                LoadState.ERROR -> {
+
+                }
+                LoadState.SUCCESS -> {
+
+                }
             }
         }
     }

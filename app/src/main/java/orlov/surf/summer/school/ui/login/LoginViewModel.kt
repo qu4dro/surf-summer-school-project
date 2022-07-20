@@ -5,11 +5,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import orlov.surf.summer.school.domain.usecase.LoginUseCases
+import orlov.surf.summer.school.utils.LoadState
+import orlov.surf.summer.school.utils.Request
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor() : ViewModel() {
+class LoginViewModel @Inject constructor(private val loginUseCases: LoginUseCases) : ViewModel() {
 
     private val _loginError = MutableLiveData<LoginError>()
     val loginError
@@ -21,6 +26,7 @@ class LoginViewModel @Inject constructor() : ViewModel() {
     private var login = ""
     private var password = ""
 
+    val loadState = MutableLiveData<LoadState>()
 
     private val loginValidator: LoginValidator by lazy {
         LoginValidator(_loginError, _passwordError)
@@ -29,9 +35,23 @@ class LoginViewModel @Inject constructor() : ViewModel() {
     fun auth() {
         if (loginValidator.isFieldsValid(login, password)) {
             viewModelScope.launch(Dispatchers.IO) {
-                // логика запроса логина
+                loginUseCases.authUser("+7$login", password).collect { request ->
+                    when (request) {
+                        is Request.Loading -> {
+                            loadState.postValue(LoadState.LOADING)
+                            Timber.d(request.toString())
+                        }
+                        is Request.Error -> {
+                            Timber.d(request.toString())
+                            loadState.postValue(LoadState.ERROR)
+                        }
+                        is Request.Success -> {
+                            Timber.d(request.data.toString())
+                            loadState.postValue(LoadState.SUCCESS)
+                        }
+                    }
+                }
             }
-
         }
     }
 
