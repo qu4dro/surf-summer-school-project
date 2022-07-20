@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import orlov.surf.summer.school.domain.usecase.LoginUseCases
+import orlov.surf.summer.school.utils.AuthState
 import orlov.surf.summer.school.utils.LoadState
 import orlov.surf.summer.school.utils.Request
 import timber.log.Timber
@@ -27,6 +27,7 @@ class LoginViewModel @Inject constructor(private val loginUseCases: LoginUseCase
     private var password = ""
 
     val loadState = MutableLiveData<LoadState>()
+    val authState = MutableLiveData<AuthState>()
 
     private val loginValidator: LoginValidator by lazy {
         LoginValidator(_loginError, _passwordError)
@@ -51,6 +52,15 @@ class LoginViewModel @Inject constructor(private val loginUseCases: LoginUseCase
                         }
                     }
                 }
+            }
+        }
+    }
+
+    fun checkAuthorization() {
+        viewModelScope.launch(Dispatchers.IO) {
+            when(loginUseCases.isAuthorized.invoke()) {
+                true -> authState.postValue(AuthState.AUTHORIZED)
+                false -> authState.postValue(AuthState.UNAUTHORIZED)
             }
         }
     }

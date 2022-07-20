@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs'
     id 'dagger.hilt.android.plugin'
+    id 'org.jetbrains.kotlin.plugin.serialization'
 }
 
 android {
@@ -97,4 +98,11 @@ dependencies {
 
     // Mask
     implementation "com.github.RedMadRobot:input-mask-android:$mask_version"
+
+    // Datastore
+    implementation "androidx.datastore:datastore-preferences:$datastore_version"
+    implementation "androidx.datastore:datastore:$datastore_version"
+
+    // Kotlin serialization
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlin_serialization_version"
 }
