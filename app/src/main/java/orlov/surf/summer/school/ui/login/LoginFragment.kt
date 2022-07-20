@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import com.redmadrobot.inputmask.MaskedTextChangedListener.Companion.installOn
 import dagger.hilt.android.AndroidEntryPoint
@@ -82,18 +85,43 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun observeLoadState() {
         viewModel.loadState.observe(viewLifecycleOwner) { state ->
-            when(state) {
+            when (state) {
                 LoadState.LOADING -> {
-
+                    setLoadingUIState()
                 }
                 LoadState.ERROR -> {
-
+                    setErrorUIState()
                 }
                 LoadState.SUCCESS -> {
-
+                    setSuccessUIState()
                 }
             }
         }
+    }
+
+    private fun setLoadingUIState() {
+        binding.apply {
+            btnLogin.isLoading = true
+            flBlockAction.isVisible = true
+        }
+    }
+
+    private fun setErrorUIState() {
+        binding.apply {
+            btnLogin.isLoading = false
+            flBlockAction.isVisible = false
+            val snackbar = Snackbar.make(binding.root, getString(R.string.auth_error),Snackbar.LENGTH_LONG)
+            snackbar.anchorView = btnLogin
+            snackbar.show()
+        }
+    }
+
+    private fun setSuccessUIState() {
+        binding.apply {
+            btnLogin.isLoading = false
+            flBlockAction.isVisible = false
+        }
+        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
     }
 
     private fun setupLoginMask() {
