@@ -15,7 +15,7 @@ object RequestUtils {
             emit(Request.Loading())
         }.catch { error ->
             Timber.d("Loading error", error)
-            emit(Request.Error(error))
+            emit(Request.Error(error.message ?: ""))
         }
     }
 

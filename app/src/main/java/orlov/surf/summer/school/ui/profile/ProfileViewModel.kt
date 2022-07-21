@@ -11,7 +11,6 @@ import orlov.surf.summer.school.domain.usecase.auth.AuthUseCases
 import orlov.surf.summer.school.domain.usecase.profile.ProfileUseCases
 import orlov.surf.summer.school.utils.LoadState
 import orlov.surf.summer.school.utils.Request
-import orlov.surf.summer.school.utils.Resource
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,19 +36,17 @@ class ProfileViewModel @Inject constructor(
 
     fun logout(token: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = authUseCases.logoutUseCase(token)
-            when (response) {
-                is Resource.Loading -> {
+            when (authUseCases.logoutUseCase(token)) {
+                is Request.Loading -> {
                     loadState.postValue(LoadState.LOADING)
                 }
-                is Resource.Error -> {
+                is Request.Error -> {
                     loadState.postValue(LoadState.ERROR)
                 }
-                is Resource.Success -> {
+                is Request.Success -> {
                     loadState.postValue(LoadState.SUCCESS)
                 }
 
-                else -> {}
             }
         }
     }
