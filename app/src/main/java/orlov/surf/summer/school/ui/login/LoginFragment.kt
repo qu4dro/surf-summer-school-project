@@ -16,7 +16,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import orlov.surf.summer.school.R
 import orlov.surf.summer.school.databinding.FragmentLoginBinding
 import orlov.surf.summer.school.utils.LoadState
-import timber.log.Timber
 
 @AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {

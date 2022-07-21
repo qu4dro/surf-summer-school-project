@@ -1,20 +1,14 @@
 package orlov.surf.summer.school.di
 
 import android.content.Context
-import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
-import androidx.datastore.core.Serializer
 import androidx.datastore.dataStoreFile
-import androidx.datastore.migrations.SharedPreferencesMigration
-import androidx.datastore.preferences.protobuf.InvalidProtocolBufferException
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import orlov.surf.summer.school.data.datastore.UserPreferences
 import orlov.surf.summer.school.data.datastore.UserPreferencesSerializer
 import orlov.surf.summer.school.data.repository.UserPreferencesRepositoryImpl

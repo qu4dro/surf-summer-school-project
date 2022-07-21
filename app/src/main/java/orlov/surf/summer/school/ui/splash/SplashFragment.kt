@@ -14,7 +14,6 @@ import orlov.surf.summer.school.R
 import orlov.surf.summer.school.databinding.FragmentSplashBinding
 import orlov.surf.summer.school.ui.login.LoginViewModel
 import orlov.surf.summer.school.utils.AuthState
-import timber.log.Timber
 
 
 @AndroidEntryPoint
