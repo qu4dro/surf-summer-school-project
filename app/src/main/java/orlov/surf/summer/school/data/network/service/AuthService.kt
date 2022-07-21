@@ -2,6 +2,7 @@ package orlov.surf.summer.school.data.network.service
 
 import orlov.surf.summer.school.data.network.model.AuthRequest
 import orlov.surf.summer.school.data.network.model.AuthResponse
+import orlov.surf.summer.school.data.network.model.LogoutResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Header

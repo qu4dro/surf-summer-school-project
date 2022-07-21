@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.Group
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.google.android.material.snackbar.Snackbar
@@ -70,6 +71,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             flBlockAction.isVisible = false
         }
             findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
+
     }
 
     private fun setErrorUIState() {

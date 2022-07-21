@@ -8,11 +8,13 @@ import orlov.surf.summer.school.data.datastore.UserPreferencesSerializer
 import orlov.surf.summer.school.data.datastore.mapToPreferences
 import orlov.surf.summer.school.data.network.mapper.mapToDomain
 import orlov.surf.summer.school.data.network.model.AuthRequest
+import orlov.surf.summer.school.data.network.model.LogoutResponse
 import orlov.surf.summer.school.data.network.service.AuthService
 import orlov.surf.summer.school.domain.model.User
 import orlov.surf.summer.school.domain.repository.AuthRepository
 import orlov.surf.summer.school.utils.Request
 import orlov.surf.summer.school.utils.RequestUtils
+import orlov.surf.summer.school.utils.Resource
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -30,12 +32,12 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun logout(token: String): Flow<Request<Response<Unit>>> {
-        return RequestUtils.requestFlow {
-            val logoutResponse = authService.logout("Token $token")
+    override suspend fun logout(token: String): Resource<Unit> {
+        val response = authService.logout("Token $token")
+        return if (response.code() == 401 || response.code() == 204) {
             dataStore.updateData { UserPreferencesSerializer.defaultValue }
-            logoutResponse
-        }
+            Resource.Success(null)
+        } else Resource.Error(response.code(), response.message())
     }
 
     override suspend fun checkAuthorization() =
