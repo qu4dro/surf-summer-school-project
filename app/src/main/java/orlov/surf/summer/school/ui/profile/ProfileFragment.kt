@@ -8,11 +8,14 @@ import androidx.constraintlayout.widget.Group
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import coil.load
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textview.MaterialTextView
 import orlov.surf.summer.school.R
 import orlov.surf.summer.school.databinding.FragmentProfileBinding
 import orlov.surf.summer.school.domain.model.User
+import orlov.surf.summer.school.utils.LoadState
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
@@ -37,12 +40,60 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun setupObservers() {
+
+        observeLoadState()
+
         viewModel.user.observe(viewLifecycleOwner) { user ->
             setupUI(user)
         }
     }
 
+    private fun observeLoadState() {
+        viewModel.loadState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                LoadState.LOADING -> {
+                    setLoadingUIState()
+                }
+                LoadState.ERROR -> {
+                    setErrorUIState()
+                }
+                LoadState.SUCCESS -> {
+                    setSuccessUIState()
+                }
+            }
+        }
+    }
+
+    private fun setSuccessUIState() {
+        binding.apply {
+            btnLogout.isLoading = false
+            flBlockAction.isVisible = false
+        }
+            findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
+    }
+
+    private fun setErrorUIState() {
+        binding.apply {
+            btnLogout.isLoading = false
+            flBlockAction.isVisible = false
+            val snackbar = Snackbar.make(binding.root, getString(R.string.auth_error), Snackbar.LENGTH_LONG)
+            snackbar.anchorView = btnLogout
+            snackbar.show()
+        }
+
+    }
+
+    private fun setLoadingUIState() {
+        binding.apply {
+            btnLogout.isLoading = true
+            flBlockAction.isVisible = true
+        }
+    }
+
     private fun setupUI(user: User) {
+
+        binding.btnLogout.setOnClickListener { viewModel.logout(user.token) }
+
         val firstName = user.userInfo.firstName
         val lastName = user.userInfo.lastName
         val city = user.userInfo.city

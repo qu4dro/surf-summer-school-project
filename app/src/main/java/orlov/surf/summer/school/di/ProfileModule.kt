@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import orlov.surf.summer.school.data.datastore.UserPreferences
+import orlov.surf.summer.school.data.network.service.AuthService
 import orlov.surf.summer.school.data.repository.ProfileRepositoryImpl
 import orlov.surf.summer.school.domain.usecase.profile.FetchUserUseCase
 import orlov.surf.summer.school.domain.usecase.profile.LogoutUserUseCase
@@ -18,7 +19,7 @@ object ProfileModule {
 
     @Provides
     @Singleton
-    fun provideProfileRepository(dataStore: DataStore<UserPreferences>) = ProfileRepositoryImpl(dataStore)
+    fun provideProfileRepository(dataStore: DataStore<UserPreferences>, authService: AuthService) = ProfileRepositoryImpl(dataStore, authService)
 
     @Provides
     @Singleton
@@ -26,7 +27,7 @@ object ProfileModule {
 
     @Provides
     @Singleton
-    fun provideLogoutUserUseCase() = LogoutUserUseCase()
+    fun provideLogoutUserUseCase(profileRepository: ProfileRepositoryImpl) = LogoutUserUseCase(profileRepository)
 
     @Provides
     @Singleton
