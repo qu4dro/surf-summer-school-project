@@ -7,4 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_grey">#FBFBFB</color>
+    <color name="middle_grey">#DFDFDF</color>
+    <color name="grey">#B0B0B0</color>
+    <color name="red">#FF002E</color>
+
+    <color name="boxStrokeFocused">@color/middle_grey</color>
+    <color name="boxStrokeUnfocused">@color/middle_grey</color>
+    <color name="boxBackground">@color/light_grey</color>
+    <color name="hintColor">@color/grey</color>
+    <color name="errorRed">@color/red</color>
 </resources>

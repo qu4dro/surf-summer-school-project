@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxStrokeColor">@drawable/box_stroke_color_selector</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">1dp</item>
+        <item name="errorTextColor">@color/errorRed</item>
+        <item name="boxStrokeErrorColor">@color/errorRed</item>
+        <item name="errorTextAppearance">@style/Text.Regular.12</item>
+        <item name="hintTextAppearance">@style/Text.Medium.12</item>
+        <item name="hintTextColor">@color/hintColor</item>
+        <item name="errorIconDrawable">@null</item>
+        <item name="endIconTint">@color/hintColor</item>
+        <item name="boxBackgroundColor">@color/boxBackground</item>
+        <item name="android:textColorHint">@color/hintColor</item>
+    </style>
+
+    <style name="TextInputEditText">
+        <item name="android:textAppearance">@style/Text.Medium.16</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="Snackbar" parent="@style/Widget.Design.Snackbar" tools:override="true">>
+        <item name="cornerRadius">0dp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:background">?attr/colorError</item>
+    </style>
+
+<!--    <style name="SnackbarButton" parent="@style/Widget.MaterialComponents.Button.TextButton.Snackbar">-->
+<!--    </style>-->
+
+    <style name="SnackbarText" parent="@style/Widget.MaterialComponents.Snackbar.TextView">>
+        <item name="android:textAppearance">@style/Text.Medium.14</item>
+        <item name="android:textColor">?attr/colorOnError</item>
+    </style>
+
+</resources>

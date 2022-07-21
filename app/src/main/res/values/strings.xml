@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Surf</string>
+    <string name="login_title">Вход</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="enter">Войти</string>
+    <string name="empty_field">"Поле не может быть пустым"</string>
+    <string name="password_length">Пароль должен быть от 6 до 255 символов</string>
+    <string name="login_format">Неверный формат номера телефона</string>
+    <string name="auth_error">Логин или пароль введен неправильно</string>
 </resources>
