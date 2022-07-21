@@ -8,4 +8,7 @@
     <string name="password_length">Пароль должен быть от 6 до 255 символов</string>
     <string name="login_format">Неверный формат номера телефона</string>
     <string name="auth_error">Логин или пароль введен неправильно</string>
+    <string name="home">Главная</string>
+    <string name="favourites">Избранное</string>
+    <string name="profile">Профиль</string>
 </resources>

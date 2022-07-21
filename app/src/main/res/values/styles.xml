@@ -37,4 +37,11 @@
         <item name="android:textColor">?attr/colorOnError</item>
     </style>
 
+    <style name="BottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemTextAppearanceActive">@style/Text.Semibold.10</item>
+        <item name="itemTextAppearanceInactive">@style/Text.Semibold.10</item>
+        <item name="itemIconTint">@drawable/navigation_icon_color_selector</item>
+        <item name="itemTextColor">@drawable/navigation_icon_color_selector</item>
+    </style>
+
 </resources>

@@ -16,6 +16,10 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="Text.Semibold.10">
+        <item name="android:textSize">10sp</item>
+    </style>
+
     <!--Medium-->
     <style name="Text.Medium">
         <item name="fontFamily">@font/montserrat_medium</item>

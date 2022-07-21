@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import orlov.surf.summer.school.R
 import orlov.surf.summer.school.databinding.ActivityMainBinding
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
                 else -> binding.nvBottomNavigation.visibility = View.VISIBLE
             }
         }
+        binding.nvBottomNavigation.setupWithNavController(navController)
     }
 
 

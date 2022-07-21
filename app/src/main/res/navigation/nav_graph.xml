@@ -37,5 +37,15 @@
         android:name="orlov.surf.summer.school.ui.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/favouritesFragment"
+        tools:layout="@layout/fragment_favourites"
+        android:name="orlov.surf.summer.school.ui.favourites.FavouritesFragment"
+        android:label="FavouritesFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        tools:layout="@layout/fragment_profile"
+        android:name="orlov.surf.summer.school.ui.profile.ProfileFragment"
+        android:label="ProfileFragment" />
 
 </navigation>

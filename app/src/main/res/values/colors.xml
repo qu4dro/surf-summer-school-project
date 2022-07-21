@@ -6,6 +6,7 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="black_30_opacity">#4D000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="light_grey">#FBFBFB</color>
     <color name="middle_grey">#DFDFDF</color>
@@ -17,4 +18,7 @@
     <color name="boxBackground">@color/light_grey</color>
     <color name="hintColor">@color/grey</color>
     <color name="errorRed">@color/red</color>
+
+    <color name="navigationActive">@color/black</color>
+    <color name="navigationInactive">@color/black_30_opacity</color>
 </resources>
