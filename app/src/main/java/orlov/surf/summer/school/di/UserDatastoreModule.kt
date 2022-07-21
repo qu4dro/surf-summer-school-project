@@ -11,7 +11,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import orlov.surf.summer.school.data.datastore.UserPreferences
 import orlov.surf.summer.school.data.datastore.UserPreferencesSerializer
-import orlov.surf.summer.school.data.repository.UserPreferencesRepositoryImpl
+import orlov.surf.summer.school.data.repository.UserRepositoryImpl
+import orlov.surf.summer.school.domain.usecase.profile.ClearUserUseCase
+import orlov.surf.summer.school.domain.usecase.profile.FetchUserUseCase
+import orlov.surf.summer.school.domain.usecase.profile.ProfileUseCases
 import javax.inject.Singleton
 
 
@@ -33,6 +36,24 @@ object DatastoreModule {
 
     @Singleton
     @Provides
-    fun provideUserPreferencesRepository(dataStore: DataStore<UserPreferences>) = UserPreferencesRepositoryImpl(dataStore)
+    fun provideUserPreferencesRepository(dataStore: DataStore<UserPreferences>) =
+        UserRepositoryImpl(dataStore)
+
+    @Singleton
+    @Provides
+    fun provideClearUserUseCase(userRepository: UserRepositoryImpl) =
+        ClearUserUseCase(userRepository)
+
+    @Singleton
+    @Provides
+    fun provideFetchUserUseCase(userRepository: UserRepositoryImpl) =
+        FetchUserUseCase(userRepository)
+
+    @Singleton
+    @Provides
+    fun provideProfileUseCases(
+        clearUserUseCase: ClearUserUseCase,
+        fetchUserUseCase: FetchUserUseCase
+    ) = ProfileUseCases(clearUserUseCase, fetchUserUseCase)
 
 }

@@ -2,9 +2,9 @@ package orlov.surf.summer.school.domain.repository
 
 import orlov.surf.summer.school.data.datastore.UserPreferences
 
-interface UserPreferencesRepository {
+interface UserRepository {
 
-    suspend fun updateUserPreferences(userPreferences: UserPreferences)
+    suspend fun clearUserPreferences()
 
     suspend fun getUserPreferences(): UserPreferences
 

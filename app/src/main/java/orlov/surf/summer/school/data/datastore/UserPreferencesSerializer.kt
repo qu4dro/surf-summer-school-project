@@ -9,7 +9,7 @@ import java.io.OutputStream
 object UserPreferencesSerializer : Serializer<UserPreferences> {
 
     override val defaultValue: UserPreferences
-        get() = UserPreferences(false, "-1", UserInfoPreferences("", "", "", "", "", "", "", ""))
+        get() = UserPreferences("-1", UserInfoPreferences("", "", "", "", "", "", "", ""))
 
     override suspend fun readFrom(input: InputStream): UserPreferences {
         return try {
