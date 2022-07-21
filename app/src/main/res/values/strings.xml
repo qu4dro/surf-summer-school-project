@@ -4,6 +4,7 @@
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
     <string name="enter">Войти</string>
+    <string name="exit">Выйти</string>
     <string name="empty_field">"Поле не может быть пустым"</string>
     <string name="password_length">Пароль должен быть от 6 до 255 символов</string>
     <string name="login_format">Неверный формат номера телефона</string>
@@ -11,4 +12,7 @@
     <string name="home">Главная</string>
     <string name="favourites">Избранное</string>
     <string name="profile">Профиль</string>
+    <string name="city">Город</string>
+    <string name="phone">Телефон</string>
+    <string name="email">Почта</string>
 </resources>

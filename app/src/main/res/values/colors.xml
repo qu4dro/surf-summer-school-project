@@ -18,6 +18,7 @@
     <color name="boxBackground">@color/light_grey</color>
     <color name="hintColor">@color/grey</color>
     <color name="errorRed">@color/red</color>
+    <color name="grey_profile_text">#B3B3B3</color>
 
     <color name="navigationActive">@color/black</color>
     <color name="navigationInactive">@color/black_30_opacity</color>
