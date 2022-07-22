@@ -107,7 +107,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun setErrorState() {
         binding.btnLogin.isLoading = false
-        binding.flBlockAction.isVisible = false
+        binding.flBlockAction.visibility = View.GONE
         showErrorSnackbar()
         setWaitingState()
     }

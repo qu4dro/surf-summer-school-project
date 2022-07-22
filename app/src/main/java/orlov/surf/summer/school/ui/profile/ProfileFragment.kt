@@ -86,7 +86,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private fun showErrorSnackbar() {
         Snackbar
             .make(binding.root, getString(R.string.logout_error), Snackbar.LENGTH_LONG)
-            .setAnchorView(binding.root)
+            .setAnchorView(binding.btnLogout)
             .show()
     }
 

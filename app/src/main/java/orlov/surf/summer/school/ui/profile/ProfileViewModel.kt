@@ -35,7 +35,7 @@ class ProfileViewModel @Inject constructor(
     val user
         get() = _user
 
-    fun fetchUser() = viewModelScope.launch(Dispatchers.IO) {
+    private fun fetchUser() = viewModelScope.launch(Dispatchers.IO) {
         profileUseCases.fetchUserUseCase.invoke().collect {
             _user.postValue(it)
         }
