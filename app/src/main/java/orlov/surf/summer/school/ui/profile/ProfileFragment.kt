@@ -1,5 +1,6 @@
 package orlov.surf.summer.school.ui.profile
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +15,8 @@ import com.google.android.material.textview.MaterialTextView
 import orlov.surf.summer.school.R
 import orlov.surf.summer.school.databinding.FragmentProfileBinding
 import orlov.surf.summer.school.domain.model.User
-import timber.log.Timber
+import orlov.surf.summer.school.utils.LoadState
+import orlov.surf.summer.school.utils.formatToPhone
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
@@ -35,13 +37,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.profileState.postValue(ProfileUiStates.DEFAULT)
-        viewModel.fetchUser()
-        setupObservers()
+        observeLoadState()
+        observeUser()
     }
 
-    private fun setupObservers() {
-        observeLoadState()
+    private fun observeUser() {
         viewModel.user.observe(viewLifecycleOwner) { user ->
             setupUI(user)
         }
@@ -50,42 +50,51 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private fun observeLoadState() {
         viewModel.profileState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                ProfileUiStates.LOADING -> {
-                    Timber.d("LOADING LOADING")
-                    binding.btnLogout.isLoading = true
-                    binding.flBlockAction.visibility = View.VISIBLE
-                }
-                ProfileUiStates.ERROR -> {
-                    Timber.d("ERROR ERROR")
-                    binding.apply {
-                        btnLogout.isLoading = false
-                        flBlockAction.visibility = View.GONE
-                        val snackbar = Snackbar.make(root, getString(R.string.logout_error),
-                            Snackbar.LENGTH_LONG)
-                        snackbar.anchorView = btnLogout
-                        snackbar.show()
-                    }
-                    viewModel.profileState.postValue(ProfileUiStates.DEFAULT)
-                }
-                ProfileUiStates.LOGOUT -> {
-                    Timber.d("LOGOUT LOGOUT")
-                    binding.btnLogout.isLoading = false
-                    binding.flBlockAction.visibility = View.GONE
-                    viewModel.profileState.postValue(ProfileUiStates.DEFAULT)
-                    findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
-                }
-                ProfileUiStates.DEFAULT -> {
-                    Timber.d("DEFAULT DEFAULT")
-                    binding.btnLogout.isLoading = false
-                    binding.flBlockAction.visibility = View.GONE
-                }
+                LoadState.LOADING -> setLoadingState()
+                LoadState.ERROR -> setErrorState()
+                LoadState.SUCCESS -> setSuccessState()
+                LoadState.WAITING -> setWaitingState()
+                else -> LoadState.WAITING
             }
         }
     }
 
+    private fun setWaitingState() {
+        binding.btnLogout.isLoading = false
+        binding.flBlockAction.visibility = View.GONE
+    }
+
+    private fun setLoadingState() {
+        binding.btnLogout.isLoading = true
+        binding.flBlockAction.visibility = View.VISIBLE
+    }
+
+    private fun setErrorState() {
+        binding.btnLogout.isLoading = false
+        binding.flBlockAction.visibility = View.GONE
+        showErrorSnackbar()
+        viewModel.profileState.postValue(LoadState.WAITING)
+    }
+
+    private fun setSuccessState() {
+        binding.btnLogout.isLoading = false
+        binding.flBlockAction.visibility = View.GONE
+        viewModel.profileState.postValue(LoadState.WAITING)
+        findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
+    }
+
+    private fun showErrorSnackbar() {
+        Snackbar
+            .make(binding.root, getString(R.string.logout_error), Snackbar.LENGTH_LONG)
+            .setAnchorView(binding.root)
+            .show()
+    }
+
     private fun setupUI(user: User) {
 
-        binding.btnLogout.setOnClickListener { viewModel.logout(user.token) }
+        binding.btnLogout.setOnClickListener {
+            showLogoutConfirmationDialog(user)
+        }
 
         val firstName = user.userInfo.firstName
         val lastName = user.userInfo.lastName
@@ -127,6 +136,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             setTextOrChangeGroupVisibility(this, binding.groupEmail, email)
         }
 
+    }
+
+    private fun showLogoutConfirmationDialog(user: User) {
+        AlertDialog.Builder(requireContext())
+            .setMessage(R.string.logout_alert)
+            .setPositiveButton(R.string.alert_yes) { _, _ -> viewModel.logout(user.token) }
+            .setNegativeButton(R.string.alert_no, null)
+            .show()
     }
 
     private fun setTextOrChangeGroupVisibility(

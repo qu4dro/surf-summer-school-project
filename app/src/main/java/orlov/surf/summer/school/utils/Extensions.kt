@@ -1,4 +1,4 @@
-package orlov.surf.summer.school.ui.profile
+package orlov.surf.summer.school.utils
 
 // Сработает для правильного ответа сервера в виде +71234567890
 fun String.formatToPhone(): String {

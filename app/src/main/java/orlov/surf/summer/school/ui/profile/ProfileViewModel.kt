@@ -25,7 +25,11 @@ class ProfileViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    val profileState = MutableLiveData<ProfileUiStates>()
+    init {
+        fetchUser()
+    }
+
+    val profileState = MutableLiveData(LoadState.WAITING)
 
     private var _user = MutableLiveData<User>()
     val user
@@ -42,23 +46,16 @@ class ProfileViewModel @Inject constructor(
             authUseCases.logoutUseCase(token).collect { request ->
                 when (request) {
                     is Request.Loading -> {
-                        profileState.postValue(ProfileUiStates.LOADING)
+                        profileState.postValue(LoadState.LOADING)
                     }
                     is Request.Error -> {
-                        profileState.postValue(ProfileUiStates.ERROR)
+                        profileState.postValue(LoadState.ERROR)
                     }
                     is Request.Success -> {
-                        profileState.postValue(ProfileUiStates.LOGOUT)
+                        profileState.postValue(LoadState.SUCCESS)
                     }
                 }
             }
         }
     }
-}
-
-enum class ProfileUiStates {
-    DEFAULT,
-    LOADING,
-    ERROR,
-    LOGOUT
 }

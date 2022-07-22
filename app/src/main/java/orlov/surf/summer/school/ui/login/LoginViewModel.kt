@@ -26,7 +26,7 @@ class LoginViewModel @Inject constructor(private val authUseCases: AuthUseCases)
     private var login = ""
     private var password = ""
 
-    val loadState = MutableLiveData<LoadState>()
+    val loadState = MutableLiveData(LoadState.WAITING)
 
     private val loginValidator: LoginValidator by lazy {
         LoginValidator(_loginError, _passwordError)
