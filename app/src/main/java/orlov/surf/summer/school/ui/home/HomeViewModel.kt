@@ -19,6 +19,10 @@ class HomeViewModel @Inject constructor(private val photoUseCases: PhotoUseCases
     val photos
         get() = _photos
 
+    init {
+        fetchPhotos()
+    }
+
     fun fetchPhotos() {
         viewModelScope.launch(Dispatchers.IO) {
             photoUseCases.fetchPhotosUsesCase().collect { request ->

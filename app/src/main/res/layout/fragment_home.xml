@@ -25,6 +25,21 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Профиль" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="4dp"
+        android:padding="12dp"
+        android:id="@+id/rv_photos"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_bar_guideline"
+        app:spanCount="2"
+        tools:listitem="@layout/item_photo_small" />
+
     <ImageButton
         android:id="@+id/btn_search"
         android:layout_width="wrap_content"
