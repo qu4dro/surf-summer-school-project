@@ -5,10 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.Group
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.google.android.material.snackbar.Snackbar
@@ -16,7 +14,7 @@ import com.google.android.material.textview.MaterialTextView
 import orlov.surf.summer.school.R
 import orlov.surf.summer.school.databinding.FragmentProfileBinding
 import orlov.surf.summer.school.domain.model.User
-import orlov.surf.summer.school.utils.LoadState
+import timber.log.Timber
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
@@ -37,11 +35,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.profileState.postValue(ProfileUiStates.DEFAULT)
         setupObservers()
     }
 
     private fun setupObservers() {
 
+       // binding.btnLogout.setOnClickListener { findNavController().navigate(R.id.action_profileFragment_to_loginFragment) }
         observeLoadState()
 
         viewModel.user.observe(viewLifecycleOwner) { user ->
@@ -50,45 +50,38 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun observeLoadState() {
-        viewModel.loadState.observe(viewLifecycleOwner) { state ->
+        viewModel.profileState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                LoadState.LOADING -> {
-                    setLoadingUIState()
+                ProfileUiStates.LOADING -> {
+                    Timber.d("LOADING LOADING")
+                    binding.btnLogout.isLoading = true
+                    binding.flBlockAction.visibility = View.VISIBLE
                 }
-                LoadState.ERROR -> {
-                    setErrorUIState()
+                ProfileUiStates.ERROR -> {
+                    Timber.d("ERROR ERROR")
+                    binding.apply {
+                        btnLogout.isLoading = false
+                        flBlockAction.visibility = View.GONE
+                        val snackbar = Snackbar.make(root, getString(R.string.logout_error),
+                            Snackbar.LENGTH_LONG)
+                        snackbar.anchorView = btnLogout
+                        snackbar.show()
+                    }
+                    viewModel.profileState.postValue(ProfileUiStates.DEFAULT)
                 }
-                LoadState.SUCCESS -> {
-                    setSuccessUIState()
+                ProfileUiStates.LOGOUT -> {
+                    Timber.d("LOGOUT LOGOUT")
+                    binding.btnLogout.isLoading = false
+                    binding.flBlockAction.visibility = View.GONE
+                    viewModel.profileState.postValue(ProfileUiStates.DEFAULT)
+                    findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
+                }
+                ProfileUiStates.DEFAULT -> {
+                    Timber.d("DEFAULT DEFAULT")
+                    binding.btnLogout.isLoading = false
+                    binding.flBlockAction.visibility = View.GONE
                 }
             }
-        }
-    }
-
-    private fun setSuccessUIState() {
-        binding.apply {
-            btnLogout.isLoading = false
-            flBlockAction.isVisible = false
-        }
-            findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
-
-    }
-
-    private fun setErrorUIState() {
-        binding.apply {
-            btnLogout.isLoading = false
-            flBlockAction.isVisible = false
-            val snackbar = Snackbar.make(binding.root, getString(R.string.auth_error), Snackbar.LENGTH_LONG)
-            snackbar.anchorView = btnLogout
-            snackbar.show()
-        }
-
-    }
-
-    private fun setLoadingUIState() {
-        binding.apply {
-            btnLogout.isLoading = true
-            flBlockAction.isVisible = true
         }
     }
 

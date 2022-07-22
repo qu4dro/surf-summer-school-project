@@ -6,11 +6,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import okio.IOException
 import orlov.surf.summer.school.domain.model.User
 import orlov.surf.summer.school.domain.usecase.auth.AuthUseCases
 import orlov.surf.summer.school.domain.usecase.profile.ProfileUseCases
 import orlov.surf.summer.school.utils.LoadState
 import orlov.surf.summer.school.utils.Request
+import retrofit2.HttpException
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,7 +27,7 @@ class ProfileViewModel @Inject constructor(
         fetchUser()
     }
 
-    val loadState = MutableLiveData<LoadState>()
+    val profileState = MutableLiveData<ProfileUiStates>()
 
     private val _user = MutableLiveData<User>()
     val user
@@ -36,20 +39,26 @@ class ProfileViewModel @Inject constructor(
 
     fun logout(token: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            when (authUseCases.logoutUseCase(token)) {
-                is Request.Loading -> {
-                    loadState.postValue(LoadState.LOADING)
+            authUseCases.logoutUseCase(token).collect { request ->
+                when (request) {
+                    is Request.Loading -> {
+                        profileState.postValue(ProfileUiStates.LOADING)
+                    }
+                    is Request.Error -> {
+                        profileState.postValue(ProfileUiStates.ERROR)
+                    }
+                    is Request.Success -> {
+                        profileState.postValue(ProfileUiStates.LOGOUT)
+                    }
                 }
-                is Request.Error -> {
-                    loadState.postValue(LoadState.ERROR)
-                }
-                is Request.Success -> {
-                    loadState.postValue(LoadState.SUCCESS)
-                }
-
             }
         }
     }
+}
 
-
+enum class ProfileUiStates {
+    DEFAULT,
+    LOADING,
+    ERROR,
+    LOGOUT
 }
