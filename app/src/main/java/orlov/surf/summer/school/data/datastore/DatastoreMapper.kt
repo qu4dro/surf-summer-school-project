@@ -21,7 +21,6 @@ fun UserPreferences.mapToDomain(): User {
 
 fun User.mapToPreferences(): UserPreferences {
     return UserPreferences(
-        true,
         this.token,
         UserInfoPreferences(
             this.userInfo.id,

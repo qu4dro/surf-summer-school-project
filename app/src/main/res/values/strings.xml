@@ -4,11 +4,19 @@
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
     <string name="enter">Войти</string>
+    <string name="exit">Выйти</string>
     <string name="empty_field">"Поле не может быть пустым"</string>
     <string name="password_length">Пароль должен быть от 6 до 255 символов</string>
     <string name="login_format">Неверный формат номера телефона</string>
     <string name="auth_error">Логин или пароль введен неправильно</string>
+    <string name="logout_error">Не удалось выйти, попробуйте еще раз</string>
+    <string name="logout_alert">Вы точно хотите выйти из приложения?</string>
+    <string name="alert_no">Нет</string>
+    <string name="alert_yes">Да, точно</string>
     <string name="home">Главная</string>
     <string name="favourites">Избранное</string>
     <string name="profile">Профиль</string>
+    <string name="city">Город</string>
+    <string name="phone">Телефон</string>
+    <string name="email">Почта</string>
 </resources>

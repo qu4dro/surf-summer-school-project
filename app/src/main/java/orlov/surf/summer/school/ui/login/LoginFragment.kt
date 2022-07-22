@@ -16,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import orlov.surf.summer.school.R
 import orlov.surf.summer.school.databinding.FragmentLoginBinding
 import orlov.surf.summer.school.utils.LoadState
+import timber.log.Timber
 
 @AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -85,43 +86,46 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun observeLoadState() {
         viewModel.loadState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                LoadState.LOADING -> {
-                    setLoadingUIState()
-                }
-                LoadState.ERROR -> {
-                    setErrorUIState()
-                }
-                LoadState.SUCCESS -> {
-                    setSuccessUIState()
-                }
+                LoadState.LOADING -> setLoadingState()
+                LoadState.ERROR -> setErrorState()
+                LoadState.SUCCESS -> setSuccessState()
+                LoadState.WAITING -> setWaitingState()
+                else -> setWaitingState()
             }
         }
     }
 
-    private fun setLoadingUIState() {
-        binding.apply {
-            btnLogin.isLoading = true
-            flBlockAction.isVisible = true
-        }
+    private fun setWaitingState() {
+        binding.btnLogin.isLoading = false
+        binding.flBlockAction.visibility = View.GONE
     }
 
-    private fun setErrorUIState() {
-        binding.apply {
-            btnLogin.isLoading = false
-            flBlockAction.isVisible = false
-            val snackbar = Snackbar.make(binding.root, getString(R.string.auth_error),Snackbar.LENGTH_LONG)
-            snackbar.anchorView = btnLogin
-            snackbar.show()
-        }
+    private fun setLoadingState() {
+        binding.btnLogin.isLoading = true
+        binding.flBlockAction.visibility = View.GONE
     }
 
-    private fun setSuccessUIState() {
-        binding.apply {
-            btnLogin.isLoading = false
-            flBlockAction.isVisible = false
-        }
+    private fun setErrorState() {
+        binding.btnLogin.isLoading = false
+        binding.flBlockAction.visibility = View.GONE
+        showErrorSnackbar()
+        setWaitingState()
+    }
+
+    private fun setSuccessState() {
+        binding.btnLogin.isLoading = false
+        binding.flBlockAction.isVisible = false
         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+        setWaitingState()
     }
+
+    private fun showErrorSnackbar() {
+        Snackbar
+            .make(binding.root, getString(R.string.auth_error), Snackbar.LENGTH_LONG)
+            .setAnchorView(binding.btnLogin)
+            .show()
+    }
+
 
     private fun setupLoginMask() {
         installOn(

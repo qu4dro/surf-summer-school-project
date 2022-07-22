@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         binding.nvBottomNavigation.setupWithNavController(navController)
+        binding.nvBottomNavigation.setOnItemReselectedListener{}
     }
 
 

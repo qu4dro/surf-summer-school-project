@@ -12,14 +12,13 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import orlov.surf.summer.school.R
 import orlov.surf.summer.school.databinding.FragmentSplashBinding
-import orlov.surf.summer.school.ui.login.LoginViewModel
 import orlov.surf.summer.school.utils.AuthState
 
 
 @AndroidEntryPoint
 class SplashFragment : Fragment(R.layout.fragment_splash) {
 
-    private val viewModel: LoginViewModel by activityViewModels()
+    private val viewModel: SplashViewModel by activityViewModels()
 
     private var _binding: FragmentSplashBinding? = null
     val binding
@@ -37,19 +36,29 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.checkAuthorization()
-        viewModel.authState.observe(viewLifecycleOwner) {}
-        showDelayedLogo()
+        observeAuthState()
     }
 
-    private fun showDelayedLogo() {
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (viewModel.authState.value == AuthState.AUTHORIZED) {
-                findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
-            } else {
-                findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+    private fun observeAuthState() {
+        viewModel.authState.observe(viewLifecycleOwner) { authState ->
+            when (authState) {
+                AuthState.UNAUTHORIZED -> {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+                    }, LOGO_DELAY)
+                }
+                AuthState.AUTHORIZED -> {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+                    }, LOGO_DELAY)
+                }
+                else -> {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+                    }, LOGO_DELAY)
+                }
             }
-        }, LOGO_DELAY)
+        }
     }
 
     override fun onDestroyView() {
