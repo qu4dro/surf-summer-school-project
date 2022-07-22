@@ -2,9 +2,11 @@ package orlov.surf.summer.school.ui.profile
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import okio.IOException
 import orlov.surf.summer.school.domain.model.User
@@ -23,18 +25,16 @@ class ProfileViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    init {
-        fetchUser()
-    }
-
     val profileState = MutableLiveData<ProfileUiStates>()
 
-    private val _user = MutableLiveData<User>()
+    private var _user = MutableLiveData<User>()
     val user
         get() = _user
 
-    private fun fetchUser() = viewModelScope.launch(Dispatchers.IO) {
-        _user.postValue(profileUseCases.fetchUserUseCase.invoke())
+    fun fetchUser() = viewModelScope.launch(Dispatchers.IO) {
+        profileUseCases.fetchUserUseCase.invoke().collect {
+            _user.postValue(it)
+        }
     }
 
     fun logout(token: String) {

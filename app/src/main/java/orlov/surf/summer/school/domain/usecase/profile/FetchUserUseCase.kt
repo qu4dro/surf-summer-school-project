@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class FetchUserUseCase @Inject constructor(private val userRepository: UserRepositoryImpl) {
 
-    suspend operator fun invoke() = userRepository.getUserPreferences().mapToDomain()
+    suspend operator fun invoke() = userRepository.getUserPreferences()
 
 }

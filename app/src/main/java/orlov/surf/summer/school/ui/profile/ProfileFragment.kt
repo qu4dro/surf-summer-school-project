@@ -36,14 +36,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.profileState.postValue(ProfileUiStates.DEFAULT)
+        viewModel.fetchUser()
         setupObservers()
     }
 
     private fun setupObservers() {
-
-       // binding.btnLogout.setOnClickListener { findNavController().navigate(R.id.action_profileFragment_to_loginFragment) }
         observeLoadState()
-
         viewModel.user.observe(viewLifecycleOwner) { user ->
             setupUI(user)
         }

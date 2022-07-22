@@ -1,11 +1,12 @@
 package orlov.surf.summer.school.domain.repository
 
-import orlov.surf.summer.school.data.datastore.UserPreferences
+import kotlinx.coroutines.flow.Flow
+import orlov.surf.summer.school.domain.model.User
 
 interface UserRepository {
 
     suspend fun clearUserPreferences()
 
-    suspend fun getUserPreferences(): UserPreferences
+    suspend fun getUserPreferences(): Flow<User>
 
 }
