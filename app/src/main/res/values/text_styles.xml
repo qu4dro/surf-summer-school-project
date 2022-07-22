@@ -58,6 +58,10 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="Text.Regular.14.Grey">
+        <item name="android:textColor">@color/grey</item>
+    </style>
+
     <style name="Text.Regular.12">
         <item name="android:textSize">12sp</item>
     </style>

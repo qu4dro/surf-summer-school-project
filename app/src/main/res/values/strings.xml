@@ -5,6 +5,7 @@
     <string name="password">Пароль</string>
     <string name="enter">Войти</string>
     <string name="exit">Выйти</string>
+    <string name="refresh">Обновить</string>
     <string name="empty_field">"Поле не может быть пустым"</string>
     <string name="password_length">Пароль должен быть от 6 до 255 символов</string>
     <string name="login_format">Неверный формат номера телефона</string>
@@ -19,4 +20,6 @@
     <string name="city">Город</string>
     <string name="phone">Телефон</string>
     <string name="email">Почта</string>
+    <string name="gallery">Галерея</string>
+    <string name="photos_load_error">Не удалось загрузить ленту \n Обновите экран или попробуйте позже</string>
 </resources>

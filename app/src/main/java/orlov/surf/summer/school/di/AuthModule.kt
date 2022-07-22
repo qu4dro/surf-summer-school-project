@@ -11,11 +11,16 @@ import orlov.surf.summer.school.data.repository.AuthRepositoryImpl
 import orlov.surf.summer.school.domain.usecase.auth.AuthUseCases
 import orlov.surf.summer.school.domain.usecase.auth.LoginUseCase
 import orlov.surf.summer.school.domain.usecase.auth.LogoutUseCase
+import retrofit2.Retrofit
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AuthModule {
+
+    @Provides
+    @Singleton
+    fun provideAuthService(retrofit: Retrofit): AuthService = retrofit.create(AuthService::class.java)
 
     @Provides
     @Singleton
