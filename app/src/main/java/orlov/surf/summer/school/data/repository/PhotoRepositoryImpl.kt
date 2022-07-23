@@ -2,7 +2,6 @@ package orlov.surf.summer.school.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.map
 import kotlinx.coroutines.flow.Flow
 import orlov.surf.summer.school.data.db.PhotosDao
 import orlov.surf.summer.school.data.mapper.mapToDomain
@@ -19,7 +18,7 @@ class PhotoRepositoryImpl @Inject constructor(private val photoService: PhotoSer
     override suspend fun fetchPhotos(token: String): Flow<Request<List<Photo>>> {
         return RequestUtils.requestFlow {
             val response = photoService.fetchPhotos("Token $token")
-            photosDao.updatePhotos(response.map { it.mapToEntity() })
+            photosDao.insertPhotos(response.map { it.mapToEntity() })
             val photoList = response.map { it.mapToDomain() }
             photoList
         }
@@ -27,5 +26,9 @@ class PhotoRepositoryImpl @Inject constructor(private val photoService: PhotoSer
 
     override fun fetchPhotosCached(): LiveData<List<Photo>> {
         return Transformations.map(photosDao.getAllPhotos()) { it -> it.map { it.mapToDomain() } }}
+
+    override suspend fun updatePhoto(photo: Photo) {
+        photosDao.updatePhoto(photo.mapToEntity())
+    }
 
 }

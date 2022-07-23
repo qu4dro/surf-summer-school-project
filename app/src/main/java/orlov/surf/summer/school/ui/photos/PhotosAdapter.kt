@@ -1,16 +1,23 @@
-package orlov.surf.summer.school.ui
+package orlov.surf.summer.school.ui.photos
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import orlov.surf.summer.school.R
 import orlov.surf.summer.school.databinding.ItemPhotoSmallBinding
 import orlov.surf.summer.school.domain.model.Photo
 
-class PhotosAdapter(val onClickPhoto: (Photo) -> Unit) :
+class PhotosAdapter(private val clickListener: OnItemClickListener) :
     ListAdapter<Photo, PhotosAdapter.PhotosViewHolder>(DiffUtilCallback) {
+
+    interface OnItemClickListener {
+        fun onPhotoClick(photo: Photo)
+        fun onLikeClick(photo: Photo)
+    }
 
     inner class PhotosViewHolder(
         private val binding: ItemPhotoSmallBinding
@@ -18,7 +25,13 @@ class PhotosAdapter(val onClickPhoto: (Photo) -> Unit) :
         fun bind(photo: Photo) {
             binding.ivPhoto.load(photo.photoUrl)
             binding.tvTitle.text = photo.title
-            binding.root.setOnClickListener { onClickPhoto }
+            binding.root.setOnClickListener { clickListener.onPhotoClick(photo) }
+            binding.btnLike.setOnClickListener { clickListener.onLikeClick(photo) }
+            if (photo.isLiked) {
+                binding.btnLike.setImageResource(R.drawable.ic_liked)
+            } else {
+                binding.btnLike.setImageResource(R.drawable.ic_not_liked)
+            }
         }
     }
 

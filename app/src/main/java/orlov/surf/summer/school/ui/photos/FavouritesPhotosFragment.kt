@@ -1,4 +1,4 @@
-package orlov.surf.summer.school.ui.favourites
+package orlov.surf.summer.school.ui.photos
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import orlov.surf.summer.school.R
-import orlov.surf.summer.school.databinding.FragmentFavouritesBinding
+import orlov.surf.summer.school.databinding.FragmentFavouritesPhotosBinding
 
-class FavouritesFragment : Fragment(R.layout.fragment_favourites) {
+class FavouritesPhotosFragment : Fragment(R.layout.fragment_favourites_photos) {
 
-    private var _binding: FragmentFavouritesBinding? = null
+    private var _binding: FragmentFavouritesPhotosBinding? = null
     val binding
         get() = _binding!!
 
@@ -19,7 +19,7 @@ class FavouritesFragment : Fragment(R.layout.fragment_favourites) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFavouritesBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentFavouritesPhotosBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 

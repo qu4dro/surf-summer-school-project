@@ -1,4 +1,4 @@
-package orlov.surf.summer.school.ui.home
+package orlov.surf.summer.school.ui.photos
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -6,17 +6,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okio.IOException
 import orlov.surf.summer.school.domain.model.Photo
 import orlov.surf.summer.school.domain.usecase.photo.PhotoUseCases
 import orlov.surf.summer.school.utils.LoadState
-import orlov.surf.summer.school.utils.PhotoLoadState
 import orlov.surf.summer.school.utils.Request
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val photoUseCases: PhotoUseCases) : ViewModel() {
+class PhotosViewModel @Inject constructor(private val photoUseCases: PhotoUseCases) : ViewModel() {
 
     private val _photos = photoUseCases.fetchCachedPhotosUseCase.invoke()
     val photos
@@ -39,6 +36,10 @@ class HomeViewModel @Inject constructor(private val photoUseCases: PhotoUseCases
                 }
             }
         }
+    }
+
+    fun updatePhoto(photo: Photo) = viewModelScope.launch(Dispatchers.IO) {
+        photoUseCases.updatePhotoUseCase.invoke(photo)
     }
 
 }

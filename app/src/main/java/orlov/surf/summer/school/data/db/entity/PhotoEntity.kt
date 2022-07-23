@@ -10,6 +10,7 @@ data class PhotoEntity(
     val title: String,
     val content: String,
     val photoUrl: String,
-    val publicationDate: Long
+    val publicationDate: Long,
+    val isLiked: Boolean = false
 )
 

@@ -1,4 +1,4 @@
-package orlov.surf.summer.school.ui.home
+package orlov.surf.summer.school.ui.photos
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,22 +6,33 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import orlov.surf.summer.school.R
 import orlov.surf.summer.school.databinding.FragmentHomeBinding
-import orlov.surf.summer.school.ui.PhotosAdapter
+import orlov.surf.summer.school.domain.model.Photo
 import orlov.surf.summer.school.utils.LoadState
 import timber.log.Timber
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    private val viewModel: HomeViewModel by activityViewModels()
+    private val viewModel: PhotosViewModel by activityViewModels()
 
-    private val adapter = PhotosAdapter {
-        Timber.d(it.toString())
-    }
+    private val adapter = PhotosAdapter(
+        object : PhotosAdapter.OnItemClickListener {
+            override fun onPhotoClick(photo: Photo) {
+               findNavController().navigate(R.id.action_homeFragment_to_photoInfoFragment)
+            }
+            override fun onLikeClick(photo: Photo) {
+                photo.isLiked = !photo.isLiked
+                Timber.d(photo.isLiked.toString())
+                viewModel.updatePhoto(photo)
+            }
+        }
+    )
+
 
     private var _binding: FragmentHomeBinding? = null
     val binding

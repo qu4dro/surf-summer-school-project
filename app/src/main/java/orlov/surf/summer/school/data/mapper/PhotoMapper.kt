@@ -10,7 +10,8 @@ fun PhotoObj.mapToDomain(): Photo {
         this.title,
         this.content,
         this.photoUrl,
-        this.publicationDate
+        this.publicationDate,
+        false
     )
 }
 
@@ -20,7 +21,19 @@ fun PhotoObj.mapToEntity(): PhotoEntity {
         this.title,
         this.content,
         this.photoUrl,
-        this.publicationDate
+        this.publicationDate,
+        false
+    )
+}
+
+fun Photo.mapToEntity(): PhotoEntity {
+    return PhotoEntity(
+        this.id,
+        this.title,
+        this.content,
+        this.photoUrl,
+        this.publicationDate,
+        this.isLiked,
     )
 }
 
@@ -30,6 +43,7 @@ fun PhotoEntity.mapToDomain(): Photo {
         this.title,
         this.content,
         this.photoUrl,
-        this.publicationDate
+        this.publicationDate,
+        this.isLiked
     )
 }
