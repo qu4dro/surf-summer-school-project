@@ -25,6 +25,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         ViewHolderType.SMALL,
         object : PhotosAdapter.OnItemClickListener {
             override fun onPhotoClick(photo: Photo) {
+                viewModel.setSelectedPhoto(photo)
                 findNavController().navigate(R.id.action_homeFragment_to_photoInfoFragment)
             }
             override fun onLikeClick(photo: Photo) {

@@ -1,7 +1,5 @@
 package orlov.surf.summer.school.domain.model
 
-import com.squareup.moshi.Json
-
 data class Photo(
     val id: String,
     val title: String,

@@ -22,6 +22,7 @@ class FavouritesPhotosFragment : Fragment(R.layout.fragment_favourites_photos) {
         ViewHolderType.LARGE,
         object : PhotosAdapter.OnItemClickListener {
             override fun onPhotoClick(photo: Photo) {
+                viewModel.setSelectedPhoto(photo)
                 findNavController().navigate(R.id.action_favouritesFragment_to_photoInfoFragment)
             }
             override fun onLikeClick(photo: Photo) {

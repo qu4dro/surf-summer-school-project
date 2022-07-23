@@ -25,7 +25,7 @@ class PhotosAdapter(private val viewHolderType: ViewHolderType, private val clic
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(photo: Photo) {
             binding.ivPhoto.load(photo.photoUrl)
-            binding.tvTitle.text = photo.title
+            binding.tvTitlePhoto.text = photo.title
             binding.root.setOnClickListener { clickListener.onPhotoClick(photo) }
             binding.btnLike.setOnClickListener { clickListener.onLikeClick(photo) }
             if (photo.isLiked) {
@@ -41,7 +41,7 @@ class PhotosAdapter(private val viewHolderType: ViewHolderType, private val clic
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(photo: Photo) {
             binding.ivPhoto.load(photo.photoUrl)
-            binding.tvTitle.text = photo.title
+            binding.tvTitlePhoto.text = photo.title
             binding.root.setOnClickListener { clickListener.onPhotoClick(photo) }
             binding.btnLike.setOnClickListener { clickListener.onLikeClick(photo) }
             binding.tvDescription.text = photo.content

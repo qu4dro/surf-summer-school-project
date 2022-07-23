@@ -23,11 +23,11 @@ class PhotosViewModel @Inject constructor(private val photoUseCases: PhotoUseCas
     val savedPhotos
         get() = _savedPhotos
 
-    val loadState = MutableLiveData(LoadState.LOADING)
+    private val _selectedPhoto = MutableLiveData<Photo>()
+    val selectedPhoto
+        get() = _selectedPhoto
 
-    init {
-        //fetchPhotos()
-    }
+    val loadState = MutableLiveData(LoadState.LOADING)
 
     fun fetchPhotos() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -35,7 +35,8 @@ class PhotosViewModel @Inject constructor(private val photoUseCases: PhotoUseCas
                 when (request) {
                     is Request.Loading -> loadState.postValue(LoadState.LOADING)
                     is Request.Error -> loadState.postValue(LoadState.ERROR)
-                    is Request.Success -> { loadState.postValue(LoadState.SUCCESS)
+                    is Request.Success -> {
+                        loadState.postValue(LoadState.SUCCESS)
                     }
                 }
             }
@@ -44,6 +45,10 @@ class PhotosViewModel @Inject constructor(private val photoUseCases: PhotoUseCas
 
     fun likePhoto(photo: Photo) = viewModelScope.launch(Dispatchers.IO) {
         photoUseCases.likePhotoUseCase.invoke(photo)
+    }
+
+    fun setSelectedPhoto(photo: Photo) {
+        _selectedPhoto.postValue(photo)
     }
 
 }
