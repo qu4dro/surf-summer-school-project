@@ -19,6 +19,10 @@ class PhotosViewModel @Inject constructor(private val photoUseCases: PhotoUseCas
     val photos
         get() = _photos
 
+    private val _savedPhotos = photoUseCases.getSavedPhotosUseCase.invoke()
+    val savedPhotos
+        get() = _savedPhotos
+
     val loadState = MutableLiveData(LoadState.LOADING)
 
     init {

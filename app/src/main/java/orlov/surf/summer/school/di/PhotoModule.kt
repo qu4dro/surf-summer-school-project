@@ -9,10 +9,7 @@ import orlov.surf.summer.school.data.datastore.UserPreferences
 import orlov.surf.summer.school.data.db.PhotosDao
 import orlov.surf.summer.school.data.network.service.PhotoService
 import orlov.surf.summer.school.data.repository.PhotoRepositoryImpl
-import orlov.surf.summer.school.domain.usecase.photo.FetchCachedPhotosUseCase
-import orlov.surf.summer.school.domain.usecase.photo.FetchPhotosUsesCase
-import orlov.surf.summer.school.domain.usecase.photo.PhotoUseCases
-import orlov.surf.summer.school.domain.usecase.photo.UpdatePhotoUseCase
+import orlov.surf.summer.school.domain.usecase.photo.*
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -49,10 +46,16 @@ object PhotoModule {
 
     @Provides
     @Singleton
+    fun provideGetSavedPhotosUseCase(photoRepository: PhotoRepositoryImpl) =
+        GetSavedPhotosUseCase(photoRepository)
+
+    @Provides
+    @Singleton
     fun providePhotoUseCases(
         fetchPhotosUseCase: FetchPhotosUsesCase,
         fetchCachedPhotosUseCase: FetchCachedPhotosUseCase,
-        updatePhotoUseCase: UpdatePhotoUseCase
-    ) = PhotoUseCases(fetchPhotosUseCase, fetchCachedPhotosUseCase, updatePhotoUseCase)
+        updatePhotoUseCase: UpdatePhotoUseCase,
+        getSavedPhotosUseCase: GetSavedPhotosUseCase
+    ) = PhotoUseCases(fetchPhotosUseCase, fetchCachedPhotosUseCase, updatePhotoUseCase, getSavedPhotosUseCase)
 
 }

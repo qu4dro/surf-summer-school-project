@@ -11,6 +11,9 @@ interface PhotosDao {
     @Query("SELECT * FROM photos")
     fun getAllPhotos(): LiveData<List<PhotoEntity>>
 
+    @Query("SELECT * FROM photos WHERE isLiked = 1")
+    fun getSavedPhotos(): LiveData<List<PhotoEntity>>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertPhotos(articlesList: List<PhotoEntity>)
 

@@ -11,6 +11,8 @@ interface PhotoRepository {
 
     fun fetchPhotosCached(): LiveData<List<Photo>>
 
+    fun getSavedPhotos(): LiveData<List<Photo>>
+
     suspend fun updatePhoto(photo: Photo)
 
 }

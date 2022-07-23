@@ -21,18 +21,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val viewModel: PhotosViewModel by activityViewModels()
 
     private val adapter = PhotosAdapter(
+        ViewHolderType.SMALL,
         object : PhotosAdapter.OnItemClickListener {
             override fun onPhotoClick(photo: Photo) {
                findNavController().navigate(R.id.action_homeFragment_to_photoInfoFragment)
             }
             override fun onLikeClick(photo: Photo) {
                 photo.isLiked = !photo.isLiked
-                Timber.d(photo.isLiked.toString())
                 viewModel.updatePhoto(photo)
             }
         }
     )
-
 
     private var _binding: FragmentHomeBinding? = null
     val binding

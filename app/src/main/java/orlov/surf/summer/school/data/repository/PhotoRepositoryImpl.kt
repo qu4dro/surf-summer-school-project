@@ -13,7 +13,10 @@ import orlov.surf.summer.school.utils.Request
 import orlov.surf.summer.school.utils.RequestUtils
 import javax.inject.Inject
 
-class PhotoRepositoryImpl @Inject constructor(private val photoService: PhotoService, private val photosDao: PhotosDao) : PhotoRepository {
+class PhotoRepositoryImpl @Inject constructor(
+    private val photoService: PhotoService,
+    private val photosDao: PhotosDao
+) : PhotoRepository {
 
     override suspend fun fetchPhotos(token: String): Flow<Request<List<Photo>>> {
         return RequestUtils.requestFlow {
@@ -25,7 +28,12 @@ class PhotoRepositoryImpl @Inject constructor(private val photoService: PhotoSer
     }
 
     override fun fetchPhotosCached(): LiveData<List<Photo>> {
-        return Transformations.map(photosDao.getAllPhotos()) { it -> it.map { it.mapToDomain() } }}
+        return Transformations.map(photosDao.getAllPhotos()) { it -> it.map { it.mapToDomain() } }
+    }
+
+    override fun getSavedPhotos(): LiveData<List<Photo>> {
+        return Transformations.map(photosDao.getSavedPhotos()) { it -> it.map { it.mapToDomain() } }
+    }
 
     override suspend fun updatePhoto(photo: Photo) {
         photosDao.updatePhoto(photo.mapToEntity())
