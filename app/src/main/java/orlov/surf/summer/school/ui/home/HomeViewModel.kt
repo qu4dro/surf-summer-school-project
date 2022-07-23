@@ -23,7 +23,10 @@ class HomeViewModel @Inject constructor(private val photoUseCases: PhotoUseCases
         get() = _photos
 
     val loadState = MutableLiveData(LoadState.LOADING)
-    var isFirstLoading = true
+
+    init {
+        //fetchPhotos()
+    }
 
     fun fetchPhotos() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -31,9 +34,11 @@ class HomeViewModel @Inject constructor(private val photoUseCases: PhotoUseCases
                 when (request) {
                     is Request.Loading -> loadState.postValue(LoadState.LOADING)
                     is Request.Error -> loadState.postValue(LoadState.ERROR)
-                    is Request.Success -> { loadState.postValue(LoadState.SUCCESS) }
+                    is Request.Success -> { loadState.postValue(LoadState.SUCCESS)
                     }
                 }
             }
         }
     }
+
+}

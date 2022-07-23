@@ -27,6 +27,7 @@
         tools:text="Профиль" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:visibility="gone"
         android:id="@+id/srl_refresh"
         android:layout_width="0dp"
         android:layout_height="0dp"
