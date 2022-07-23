@@ -6,12 +6,3 @@ enum class LoadState {
     ERROR,
     SUCCESS
 }
-
-enum class PhotoLoadState {
-    WAITING,
-    FIRST_LOADING,
-    LOADING,
-    ERROR,
-    ERROR_OR_EMPTY,
-    SUCCESS
-}

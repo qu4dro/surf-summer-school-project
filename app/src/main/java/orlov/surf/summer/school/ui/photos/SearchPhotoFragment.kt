@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -28,7 +27,7 @@ class SearchPhotoFragment : Fragment(R.layout.fragment_search) {
     private val viewModel: PhotosViewModel by activityViewModels()
 
     private val adapter = PhotosAdapter(
-        ViewHolderType.LARGE,
+        ViewHolderType.SMALL,
         object : PhotosAdapter.OnItemClickListener {
             override fun onPhotoClick(photo: Photo) {
                 viewModel.setSelectedPhoto(photo)
@@ -116,6 +115,11 @@ class SearchPhotoFragment : Fragment(R.layout.fragment_search) {
             .setPositiveButton(R.string.alert_yes) { _, _ -> viewModel.likePhoto(photo) }
             .setNegativeButton(R.string.alert_no, null)
             .show()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.searchQuery.postValue("")
     }
 
     override fun onDestroyView() {
