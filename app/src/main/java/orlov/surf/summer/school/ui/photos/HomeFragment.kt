@@ -28,6 +28,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 viewModel.setSelectedPhoto(photo)
                 findNavController().navigate(R.id.action_homeFragment_to_photoInfoFragment)
             }
+
             override fun onLikeClick(photo: Photo) {
                 if (photo.isLiked) {
                     showUnlikeDialog(photo)
@@ -64,6 +65,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
         binding.apply {
             rvPhotos.adapter = adapter
+            btnSearch.setOnClickListener { findNavController().navigate(R.id.action_homeFragment_to_searchPhotoFragment) }
             btnRefresh.setOnClickListener { viewModel.fetchPhotos() }
             srlRefresh.setOnRefreshListener { viewModel.fetchPhotos() }
         }
@@ -191,7 +193,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun showUnlikeDialog(photo: Photo) {
         AlertDialog.Builder(requireContext())
             .setMessage(R.string.unlike_alert)
-            .setPositiveButton(R.string.alert_yes) { _, _ -> viewModel.likePhoto(photo)}
+            .setPositiveButton(R.string.alert_yes) { _, _ -> viewModel.likePhoto(photo) }
             .setNegativeButton(R.string.alert_no, null)
             .show()
     }

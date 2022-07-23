@@ -26,4 +26,7 @@
     <string name="gallery">Галерея</string>
     <string name="photos_load_error">Не удалось загрузить ленту\nОбновите экран или попробуйте позже</string>
     <string name="my_favourites">Мои избранные</string>
+    <string name="search">Поиск</string>
+    <string name="enter_request">Введите ваш запрос</string>
+    <string name="empty_search">По этому запросу нет результатов,\nпопробуйте другой запрос</string>
 </resources>

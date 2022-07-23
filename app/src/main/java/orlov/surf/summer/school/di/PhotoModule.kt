@@ -51,11 +51,17 @@ object PhotoModule {
 
     @Provides
     @Singleton
+    fun provideSearchPhotosUseCase(photoRepository: PhotoRepositoryImpl) =
+        SearchPhotosUseCase(photoRepository)
+
+    @Provides
+    @Singleton
     fun providePhotoUseCases(
         fetchPhotosUseCase: FetchPhotosUsesCase,
         fetchCachedPhotosUseCase: FetchCachedPhotosUseCase,
         likePhotoUseCase: LikePhotoUseCase,
-        getSavedPhotosUseCase: GetSavedPhotosUseCase
-    ) = PhotoUseCases(fetchPhotosUseCase, fetchCachedPhotosUseCase, likePhotoUseCase, getSavedPhotosUseCase)
+        getSavedPhotosUseCase: GetSavedPhotosUseCase,
+        searchPhotosUseCase: SearchPhotosUseCase
+    ) = PhotoUseCases(fetchPhotosUseCase, fetchCachedPhotosUseCase, likePhotoUseCase, getSavedPhotosUseCase, searchPhotosUseCase)
 
 }

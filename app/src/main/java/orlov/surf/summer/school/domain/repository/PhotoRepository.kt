@@ -13,6 +13,8 @@ interface PhotoRepository {
 
     fun getSavedPhotos(): LiveData<List<Photo>>
 
+    fun searchPhotos(searchQuery: String): LiveData<List<Photo>>
+
     suspend fun likePhoto(photo: Photo)
 
 }

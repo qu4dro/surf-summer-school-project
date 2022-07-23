@@ -4,5 +4,6 @@ data class PhotoUseCases(
     val fetchPhotosUsesCase: FetchPhotosUsesCase,
     val fetchCachedPhotosUseCase: FetchCachedPhotosUseCase,
     val likePhotoUseCase: LikePhotoUseCase,
-    val getSavedPhotosUseCase: GetSavedPhotosUseCase
+    val getSavedPhotosUseCase: GetSavedPhotosUseCase,
+    val searchPhotosUseCase: SearchPhotosUseCase
 )

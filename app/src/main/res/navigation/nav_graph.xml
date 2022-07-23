@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_homeFragment_to_photoInfoFragment"
             app:destination="@id/photoInfoFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchPhotoFragment"
+            app:destination="@id/searchPhotoFragment" />
     </fragment>
     <fragment
         android:id="@+id/favouritesFragment"
@@ -62,8 +65,18 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
+        tools:layout="@layout/fragment_photo_info"
         android:id="@+id/photoInfoFragment"
         android:name="orlov.surf.summer.school.ui.photos.PhotoInfoFragment"
         android:label="PhotoInfoFragment" />
+    <fragment
+        tools:layout="@layout/fragment_search"
+        android:id="@+id/searchPhotoFragment"
+        android:name="orlov.surf.summer.school.ui.photos.SearchPhotoFragment"
+        android:label="SearchPhotoFragment" >
+        <action
+            android:id="@+id/action_searchPhotoFragment_to_photoInfoFragment"
+            app:destination="@id/photoInfoFragment" />
+    </fragment>
 
 </navigation>

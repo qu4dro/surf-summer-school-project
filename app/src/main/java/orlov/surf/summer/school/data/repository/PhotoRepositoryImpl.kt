@@ -35,6 +35,10 @@ class PhotoRepositoryImpl @Inject constructor(
         return Transformations.map(photosDao.getSavedPhotos()) { it -> it.map { it.mapToDomain() } }
     }
 
+    override fun searchPhotos(searchQuery: String): LiveData<List<Photo>> {
+        return Transformations.map(photosDao.searchPhotos(searchQuery)) { it -> it.map { it.mapToDomain() } }
+    }
+
     override suspend fun likePhoto(photo: Photo) {
         val entity = photo.mapToEntity()
         photosDao.likePhoto(!entity.isLiked, entity.id)

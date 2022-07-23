@@ -1,6 +1,7 @@
 package orlov.surf.summer.school.ui.photos
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,9 +20,17 @@ class PhotosViewModel @Inject constructor(private val photoUseCases: PhotoUseCas
     val photos
         get() = _photos
 
+    var searchQuery = MutableLiveData<String>("")
+
     private val _savedPhotos = photoUseCases.getSavedPhotosUseCase.invoke()
     val savedPhotos
         get() = _savedPhotos
+
+    private var _searchedPhotos = Transformations.switchMap(searchQuery) {
+        photoUseCases.searchPhotosUseCase.invoke(it.trim())
+    }
+    val searchedPhotos
+        get() = _searchedPhotos
 
     private val _selectedPhoto = MutableLiveData<Photo>()
     val selectedPhoto

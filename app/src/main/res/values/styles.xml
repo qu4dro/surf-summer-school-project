@@ -44,4 +44,29 @@
         <item name="itemTextColor">@drawable/navigation_icon_color_selector</item>
     </style>
 
+    <style name="TextInputLayoutSearch" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        <item name="boxStrokeColor">@drawable/box_stroke_color_selector</item>
+        <item name="boxCornerRadiusTopEnd">22dp</item>
+        <item name="boxCornerRadiusTopStart">22dp</item>
+        <item name="boxCornerRadiusBottomEnd">22dp</item>
+        <item name="boxCornerRadiusBottomStart">22dp</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">0dp</item>
+        <item name="errorTextColor">@color/errorRed</item>
+        <item name="boxStrokeErrorColor">@color/errorRed</item>
+        <item name="errorTextAppearance">@style/Text.Regular.12</item>
+        <item name="hintTextAppearance">@style/Text.Medium.12</item>
+        <item name="hintTextColor">@color/hintColor</item>
+        <item name="errorIconDrawable">@null</item>
+        <item name="endIconTint">@color/hintColor</item>
+        <item name="startIconTint">@color/hintColor</item>
+        <item name="boxBackgroundColor">@color/boxBackground</item>
+        <item name="android:textColorHint">@color/hintColor</item>
+    </style>
+
+    <style name="TextInputEditTextSearch">
+        <item name="android:textAppearance">@style/Text.Medium.14</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>

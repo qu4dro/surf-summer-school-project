@@ -11,6 +11,9 @@ interface PhotosDao {
     @Query("SELECT * FROM photos")
     fun getAllPhotos(): LiveData<List<PhotoEntity>>
 
+    @Query("SELECT * FROM photos WHERE title LIKE '%' || :searchQuery || '%'")
+    fun searchPhotos(searchQuery: String): LiveData<List<PhotoEntity>>
+
     @Query("SELECT * FROM photos WHERE isLiked = 1 ORDER BY dateLiked DESC")
     fun getSavedPhotos(): LiveData<List<PhotoEntity>>
 
