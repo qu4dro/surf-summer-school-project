@@ -26,6 +26,7 @@
         tools:text="Мои избранные" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,5 +40,36 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:spanCount="2"
         tools:listitem="@layout/item_photo_large" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/group_error"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:constraint_referenced_ids="iv_load_error,tv_load_error"
+        app:flow_verticalAlign="center"
+        app:flow_verticalGap="12dp"
+        app:flow_verticalStyle="packed"
+        app:flow_wrapMode="chain"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iv_load_error"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_sad_smile" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_load_error"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/favourites_empty"
+        android:textAppearance="@style/Text.Regular.14.Grey" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

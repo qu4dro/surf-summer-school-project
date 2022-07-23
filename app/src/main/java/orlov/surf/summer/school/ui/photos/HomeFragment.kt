@@ -1,5 +1,6 @@
 package orlov.surf.summer.school.ui.photos
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,11 +25,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         ViewHolderType.SMALL,
         object : PhotosAdapter.OnItemClickListener {
             override fun onPhotoClick(photo: Photo) {
-                viewModel.updatePhoto(photo)
+                findNavController().navigate(R.id.action_homeFragment_to_photoInfoFragment)
             }
             override fun onLikeClick(photo: Photo) {
-                photo.isLiked = !photo.isLiked
-                viewModel.updatePhoto(photo)
+                if (photo.isLiked) {
+                    showUnlikeDialog(photo)
+                } else {
+                    viewModel.likePhoto(photo)
+                }
             }
         }
     )
@@ -180,6 +184,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         Snackbar
             .make(binding.root, R.string.connection_error, Snackbar.LENGTH_LONG)
             .setAnchorView(requireActivity().findViewById(R.id.nv_bottom_navigation))
+            .show()
+    }
+
+    private fun showUnlikeDialog(photo: Photo) {
+        AlertDialog.Builder(requireContext())
+            .setMessage(R.string.unlike_alert)
+            .setPositiveButton(R.string.alert_yes) { _, _ -> viewModel.likePhoto(photo)}
+            .setNegativeButton(R.string.alert_no, null)
             .show()
     }
 

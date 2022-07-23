@@ -1,5 +1,6 @@
 package orlov.surf.summer.school.ui.photos
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,10 +24,12 @@ class FavouritesPhotosFragment : Fragment(R.layout.fragment_favourites_photos) {
             override fun onPhotoClick(photo: Photo) {
                 findNavController().navigate(R.id.action_favouritesFragment_to_photoInfoFragment)
             }
-
             override fun onLikeClick(photo: Photo) {
-                photo.isLiked = !photo.isLiked
-                viewModel.updatePhoto(photo)
+                if(photo.isLiked) {
+                    showUnlikeDialog(photo)
+                } else {
+                    viewModel.likePhoto(photo)
+                }
             }
         }
     )
@@ -50,10 +53,25 @@ class FavouritesPhotosFragment : Fragment(R.layout.fragment_favourites_photos) {
     private fun setupUI() {
         viewModel.savedPhotos.observe(viewLifecycleOwner) {
             adapter.submitList(it)
+            if(it.isNullOrEmpty()) {
+                binding.groupError.visibility = View.VISIBLE
+                binding.rvPhotos.visibility = View.GONE
+            } else {
+                binding.groupError.visibility = View.GONE
+                binding.rvPhotos.visibility = View.VISIBLE
+            }
         }
         binding.apply {
             rvPhotos.adapter = adapter
         }
+    }
+
+    private fun showUnlikeDialog(photo: Photo) {
+        AlertDialog.Builder(requireContext())
+            .setMessage(R.string.unlike_alert)
+            .setPositiveButton(R.string.alert_yes) { _, _ -> viewModel.likePhoto(photo)}
+            .setNegativeButton(R.string.alert_no, null)
+            .show()
     }
 
     override fun onDestroyView() {

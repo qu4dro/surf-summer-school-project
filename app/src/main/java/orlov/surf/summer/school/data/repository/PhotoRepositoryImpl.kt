@@ -36,7 +36,8 @@ class PhotoRepositoryImpl @Inject constructor(
     }
 
     override suspend fun likePhoto(photo: Photo) {
-        photosDao.likePhoto(!photo.mapToEntity().isLiked, photo.mapToEntity().id)
+        val entity = photo.mapToEntity()
+        photosDao.likePhoto(!entity.isLiked, entity.id)
     }
 
 }
