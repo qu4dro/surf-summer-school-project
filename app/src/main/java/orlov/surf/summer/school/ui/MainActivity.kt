@@ -31,14 +31,19 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.findNavController()
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
-                R.id.splashFragment -> binding.nvBottomNavigation.visibility = View.GONE
-                R.id.loginFragment -> binding.nvBottomNavigation.visibility = View.GONE
-                R.id.photoInfoFragment -> binding.nvBottomNavigation.visibility = View.GONE
+                R.id.splashFragment -> hideNavBar()
+                R.id.loginFragment -> hideNavBar()
+                R.id.photoInfoFragment -> hideNavBar()
+                R.id.searchPhotoFragment -> hideNavBar()
                 else -> binding.nvBottomNavigation.visibility = View.VISIBLE
             }
         }
         binding.nvBottomNavigation.setupWithNavController(navController)
         binding.nvBottomNavigation.setOnItemReselectedListener{}
+    }
+
+    private fun hideNavBar() {
+        binding.nvBottomNavigation.visibility = View.GONE
     }
 
 
