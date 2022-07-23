@@ -81,6 +81,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         binding.flBlockAction.visibility = View.GONE
         viewModel.profileState.postValue(LoadState.WAITING)
         findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
+        viewModel.navigationComplete()
     }
 
     private fun showErrorSnackbar() {

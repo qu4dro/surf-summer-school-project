@@ -5,13 +5,17 @@
     <string name="password">Пароль</string>
     <string name="enter">Войти</string>
     <string name="exit">Выйти</string>
+    <string name="refresh">Обновить</string>
     <string name="empty_field">"Поле не может быть пустым"</string>
     <string name="password_length">Пароль должен быть от 6 до 255 символов</string>
     <string name="login_format">Неверный формат номера телефона</string>
     <string name="auth_error">Логин или пароль введен неправильно</string>
     <string name="logout_error">Не удалось выйти, попробуйте еще раз</string>
     <string name="logout_alert">Вы точно хотите выйти из приложения?</string>
+    <string name="unlike_alert">Вы точно хотите удалить из избранного?</string>
+    <string name="favourites_empty">В избранном пусто</string>
     <string name="alert_no">Нет</string>
+    <string name="connection_error">Отсутствует интернет-соединение\nПопробуйте позже</string>
     <string name="alert_yes">Да, точно</string>
     <string name="home">Главная</string>
     <string name="favourites">Избранное</string>
@@ -19,4 +23,10 @@
     <string name="city">Город</string>
     <string name="phone">Телефон</string>
     <string name="email">Почта</string>
+    <string name="gallery">Галерея</string>
+    <string name="photos_load_error">Не удалось загрузить ленту\nОбновите экран или попробуйте позже</string>
+    <string name="my_favourites">Мои избранные</string>
+    <string name="search">Поиск</string>
+    <string name="enter_request">Введите ваш запрос</string>
+    <string name="empty_search">По этому запросу нет результатов,\nпопробуйте другой запрос</string>
 </resources>

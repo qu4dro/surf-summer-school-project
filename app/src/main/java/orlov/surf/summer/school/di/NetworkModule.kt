@@ -9,7 +9,6 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import orlov.surf.summer.school.BuildConfig
-import orlov.surf.summer.school.data.network.service.AuthService
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -51,9 +50,5 @@ object NetworkModule {
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .build()
-
-    @Provides
-    @Singleton
-    fun provideAuthService(retrofit: Retrofit): AuthService = retrofit.create(AuthService::class.java)
 
 }
