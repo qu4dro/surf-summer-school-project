@@ -43,7 +43,7 @@ class PhotosViewModel @Inject constructor(private val photoUseCases: PhotoUseCas
     }
 
     fun updatePhoto(photo: Photo) = viewModelScope.launch(Dispatchers.IO) {
-        photoUseCases.updatePhotoUseCase.invoke(photo)
+        photoUseCases.likePhotoUseCase.invoke(photo)
     }
 
 }

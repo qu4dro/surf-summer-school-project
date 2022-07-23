@@ -13,6 +13,6 @@ interface PhotoRepository {
 
     fun getSavedPhotos(): LiveData<List<Photo>>
 
-    suspend fun updatePhoto(photo: Photo)
+    suspend fun likePhoto(photo: Photo)
 
 }

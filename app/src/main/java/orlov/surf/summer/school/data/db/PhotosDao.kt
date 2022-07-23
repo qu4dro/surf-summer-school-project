@@ -20,11 +20,8 @@ interface PhotosDao {
     @Query("DELETE FROM photos")
     suspend fun deletePhotos()
 
-//    @Query("UPDATE photos SET isLiked = :newIsLiked WHERE id = :id")
-//    fun updatePhoto(newIsLiked: Boolean, id: String)
-
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updatePhoto(photo: PhotoEntity)
+    @Query("UPDATE photos SET isLiked = :newIsLiked WHERE id = :id")
+    fun likePhoto(newIsLiked: Boolean, id: String)
 
     @Transaction
     suspend fun updatePhotos(

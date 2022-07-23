@@ -10,6 +10,7 @@ import orlov.surf.summer.school.R
 import orlov.surf.summer.school.databinding.ItemPhotoLargeBinding
 import orlov.surf.summer.school.databinding.ItemPhotoSmallBinding
 import orlov.surf.summer.school.domain.model.Photo
+import orlov.surf.summer.school.utils.formatDate
 
 class PhotosAdapter(private val viewHolderType: ViewHolderType, private val clickListener: OnItemClickListener) :
     ListAdapter<Photo, RecyclerView.ViewHolder>(DiffUtilCallback) {
@@ -44,7 +45,7 @@ class PhotosAdapter(private val viewHolderType: ViewHolderType, private val clic
             binding.root.setOnClickListener { clickListener.onPhotoClick(photo) }
             binding.btnLike.setOnClickListener { clickListener.onLikeClick(photo) }
             binding.tvDescription.text = photo.content
-            binding.tvDate.text = photo.publicationDate.toString()
+            binding.tvDate.text = photo.publicationDate.formatDate()
             if (photo.isLiked) {
                 binding.btnLike.setImageResource(R.drawable.ic_liked)
             } else {

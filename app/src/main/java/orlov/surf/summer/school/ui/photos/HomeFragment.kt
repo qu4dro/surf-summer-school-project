@@ -24,7 +24,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         ViewHolderType.SMALL,
         object : PhotosAdapter.OnItemClickListener {
             override fun onPhotoClick(photo: Photo) {
-               findNavController().navigate(R.id.action_homeFragment_to_photoInfoFragment)
+                viewModel.updatePhoto(photo)
             }
             override fun onLikeClick(photo: Photo) {
                 photo.isLiked = !photo.isLiked

@@ -50,19 +50,6 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-
-    //            val response = authService.logout("Token $token")
-//            val logout = response
-//            logout
-//            try {
-//                val response = authService.logout("Token $token")
-//                if (response.code() == 401 || response.code() == 204) {
-//                    dataStore.updateData { UserPreferencesSerializer.defaultValue }
-//                    Request.Success(null)
-//                } else Request.Error(response.message())
-//            } catch (e: IOException) {
-//                Request.Error(e.message)
-//            }
     override suspend fun checkAuthorization() =
         dataStore.data.first().token != UserPreferencesSerializer.defaultValue.token
 

@@ -35,8 +35,8 @@ class PhotoRepositoryImpl @Inject constructor(
         return Transformations.map(photosDao.getSavedPhotos()) { it -> it.map { it.mapToDomain() } }
     }
 
-    override suspend fun updatePhoto(photo: Photo) {
-        photosDao.updatePhoto(photo.mapToEntity())
+    override suspend fun likePhoto(photo: Photo) {
+        photosDao.likePhoto(!photo.mapToEntity().isLiked, photo.mapToEntity().id)
     }
 
 }

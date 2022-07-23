@@ -3,6 +3,10 @@ package orlov.surf.summer.school.utils
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import timber.log.Timber
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 // Сработает для правильного ответа сервера в виде +71234567890
 fun String.formatToPhone(): String {
@@ -19,4 +23,10 @@ fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observ
             removeObserver(this)
         }
     })
+}
+
+fun Long.formatDate(): String {
+    val outputFormat: DateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
+    val dateFormatted = outputFormat.format(this)
+    return dateFormatted
 }

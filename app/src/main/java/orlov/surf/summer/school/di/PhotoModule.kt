@@ -41,8 +41,8 @@ object PhotoModule {
 
     @Provides
     @Singleton
-    fun provideUpdatePhotoUseCase(photoRepository: PhotoRepositoryImpl) =
-        UpdatePhotoUseCase(photoRepository)
+    fun provideLikePhotoUseCase(photoRepository: PhotoRepositoryImpl) =
+        LikePhotoUseCase(photoRepository)
 
     @Provides
     @Singleton
@@ -54,8 +54,8 @@ object PhotoModule {
     fun providePhotoUseCases(
         fetchPhotosUseCase: FetchPhotosUsesCase,
         fetchCachedPhotosUseCase: FetchCachedPhotosUseCase,
-        updatePhotoUseCase: UpdatePhotoUseCase,
+        likePhotoUseCase: LikePhotoUseCase,
         getSavedPhotosUseCase: GetSavedPhotosUseCase
-    ) = PhotoUseCases(fetchPhotosUseCase, fetchCachedPhotosUseCase, updatePhotoUseCase, getSavedPhotosUseCase)
+    ) = PhotoUseCases(fetchPhotosUseCase, fetchCachedPhotosUseCase, likePhotoUseCase, getSavedPhotosUseCase)
 
 }
