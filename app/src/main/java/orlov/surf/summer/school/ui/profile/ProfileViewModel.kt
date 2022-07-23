@@ -2,20 +2,15 @@ package orlov.surf.summer.school.ui.profile
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import okio.IOException
 import orlov.surf.summer.school.domain.model.User
 import orlov.surf.summer.school.domain.usecase.auth.AuthUseCases
 import orlov.surf.summer.school.domain.usecase.profile.ProfileUseCases
 import orlov.surf.summer.school.utils.LoadState
 import orlov.surf.summer.school.utils.Request
-import retrofit2.HttpException
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,7 +24,9 @@ class ProfileViewModel @Inject constructor(
         fetchUser()
     }
 
-    val profileState = MutableLiveData(LoadState.WAITING)
+    private val _profileState = MutableLiveData(LoadState.WAITING)
+    val profileState
+        get() = _profileState
 
     private var _user = MutableLiveData<User>()
     val user
@@ -46,16 +43,20 @@ class ProfileViewModel @Inject constructor(
             authUseCases.logoutUseCase(token).collect { request ->
                 when (request) {
                     is Request.Loading -> {
-                        profileState.postValue(LoadState.LOADING)
+                        _profileState.postValue(LoadState.LOADING)
                     }
                     is Request.Error -> {
-                        profileState.postValue(LoadState.ERROR)
+                        _profileState.postValue(LoadState.ERROR)
                     }
                     is Request.Success -> {
-                        profileState.postValue(LoadState.SUCCESS)
+                        _profileState.postValue(LoadState.SUCCESS)
                     }
                 }
             }
         }
+    }
+
+    fun navigationComplete() {
+        _profileState.postValue(LoadState.WAITING)
     }
 }

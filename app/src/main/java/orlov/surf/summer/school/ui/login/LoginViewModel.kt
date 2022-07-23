@@ -60,4 +60,8 @@ class LoginViewModel @Inject constructor(private val authUseCases: AuthUseCases)
         this.password = password
     }
 
+    fun navigationComplete() {
+        loadState.postValue(LoadState.WAITING)
+    }
+
 }

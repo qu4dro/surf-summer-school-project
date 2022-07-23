@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import orlov.surf.summer.school.data.datastore.UserPreferences
+import orlov.surf.summer.school.data.db.PhotosDao
 import orlov.surf.summer.school.data.network.service.AuthService
 import orlov.surf.summer.school.data.repository.AuthRepositoryImpl
 import orlov.surf.summer.school.domain.usecase.auth.AuthUseCases
@@ -24,7 +25,7 @@ object AuthModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepository(authService: AuthService, dataStore: DataStore<UserPreferences>) = AuthRepositoryImpl(authService, dataStore)
+    fun provideAuthRepository(authService: AuthService, dataStore: DataStore<UserPreferences>, photosDao: PhotosDao) = AuthRepositoryImpl(authService, dataStore, photosDao)
 
     @Provides
     @Singleton

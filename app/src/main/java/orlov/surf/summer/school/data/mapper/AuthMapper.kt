@@ -1,4 +1,4 @@
-package orlov.surf.summer.school.data.network.mapper
+package orlov.surf.summer.school.data.mapper
 
 import orlov.surf.summer.school.data.network.model.AuthResponse
 import orlov.surf.summer.school.data.network.model.LogoutResponse

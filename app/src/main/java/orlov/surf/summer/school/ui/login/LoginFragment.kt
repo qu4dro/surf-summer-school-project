@@ -36,6 +36,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
@@ -85,6 +89,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun observeLoadState() {
         viewModel.loadState.observe(viewLifecycleOwner) { state ->
+            Timber.d(state.toString())
             when (state) {
                 LoadState.LOADING -> setLoadingState()
                 LoadState.ERROR -> setErrorState()
@@ -116,7 +121,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         binding.btnLogin.isLoading = false
         binding.flBlockAction.isVisible = false
         findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
-        setWaitingState()
+        viewModel.navigationComplete()
     }
 
     private fun showErrorSnackbar() {

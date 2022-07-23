@@ -6,8 +6,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import orlov.surf.summer.school.data.datastore.UserPreferences
+import orlov.surf.summer.school.data.db.PhotosDao
 import orlov.surf.summer.school.data.network.service.PhotoService
 import orlov.surf.summer.school.data.repository.PhotoRepositoryImpl
+import orlov.surf.summer.school.domain.usecase.photo.FetchCachedPhotosUseCase
 import orlov.surf.summer.school.domain.usecase.photo.FetchPhotosUsesCase
 import orlov.surf.summer.school.domain.usecase.photo.PhotoUseCases
 import retrofit2.Retrofit
@@ -24,15 +26,26 @@ object PhotoModule {
 
     @Provides
     @Singleton
-    fun providePhotoRepository(photoService: PhotoService) =
-        PhotoRepositoryImpl(photoService)
+    fun providePhotoRepository(photoService: PhotoService, photosDao: PhotosDao) =
+        PhotoRepositoryImpl(photoService, photosDao)
 
     @Provides
     @Singleton
-    fun provideFetchPhotosUseCase(photoRepository: PhotoRepositoryImpl, dataStore: DataStore<UserPreferences>) = FetchPhotosUsesCase(photoRepository, dataStore)
+    fun provideFetchPhotosUseCase(
+        photoRepository: PhotoRepositoryImpl,
+        dataStore: DataStore<UserPreferences>
+    ) = FetchPhotosUsesCase(photoRepository, dataStore)
 
     @Provides
     @Singleton
-    fun providePhotoUseCases(fetchPhotosUseCase: FetchPhotosUsesCase) = PhotoUseCases(fetchPhotosUseCase)
+    fun provideFetchCachedPhotosUseCase(photoRepository: PhotoRepositoryImpl) =
+        FetchCachedPhotosUseCase(photoRepository)
+
+    @Provides
+    @Singleton
+    fun providePhotoUseCases(
+        fetchPhotosUseCase: FetchPhotosUsesCase,
+        fetchCachedPhotosUseCase: FetchCachedPhotosUseCase
+    ) = PhotoUseCases(fetchPhotosUseCase, fetchCachedPhotosUseCase)
 
 }
